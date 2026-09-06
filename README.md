@@ -1,6 +1,6 @@
 # Sistema de Tickets de Soporte Tecnico
 
-Proyecto de diseno y desarrollo de un sistema de tickets de soporte tecnico corporativo: diagramas UML (flujo, casos de uso, clases) y su implementacion en C#.
+Proyecto de diseno y desarrollo de un sistema de tickets de soporte tecnico corporativo: diagramas UML (flujo, casos de uso, clases) y su implementacion en C# y Java.
 
 ## Contenido
 
@@ -8,6 +8,7 @@ Proyecto de diseno y desarrollo de un sistema de tickets de soporte tecnico corp
 - **Diagramas de caso de uso**: Crear Ticket, Asignar Ticket, Resolver Ticket, Escalar Ticket, Generar Metricas, Consultar Bitacora
 - **Diagramas de clase**: diagrama de clases del sistema
 - **TicketsSoporte**: proyecto en C# (.NET), con las clases del sistema en la carpeta `logica`
+- **BlueJ_Proyecto**: version en Java del mismo modelo de clases, para el entorno BlueJ
 
 ## Casos de uso
 
