@@ -46,14 +46,16 @@ namespace TicketsSoporte
                 Console.ResetColor();
                 Console.WriteLine(" 1. Ver usuarios del sistema (polimorfismo)");
                 Console.WriteLine(" 2. Ver flujo de estados del ticket");
-                Console.WriteLine(" 3. Crear ticket y asignar automaticamente");
+                Console.WriteLine(" 3. Crear ticket (asigna automaticamente)");
                 Console.WriteLine(" 4. Ver tickets");
-                Console.WriteLine(" 5. Registrar error en ticket");
-                Console.WriteLine(" 6. Resolver ticket");
-                Console.WriteLine(" 7. Cerrar ticket");
-                Console.WriteLine(" 8. Generar resumen de control");
-                Console.WriteLine(" 9. Salir");
-                Console.Write("\n Seleccione una opcion (1-9): ");
+                Console.WriteLine(" 5. Asignar / reasignar ticket a un tecnico");
+                Console.WriteLine(" 6. Registrar error en ticket");
+                Console.WriteLine(" 7. Resolver ticket");
+                Console.WriteLine(" 8. Escalar ticket");
+                Console.WriteLine(" 9. Cerrar ticket");
+                Console.WriteLine(" 10. Generar metricas");
+                Console.WriteLine(" 11. Salir");
+                Console.Write("\n Seleccione una opcion (1-11): ");
 
                 try
                 {
@@ -78,29 +80,37 @@ namespace TicketsSoporte
                             break;
 
                         case "5":
-                            registrarError(objGestor);
+                            asignarTicket(objGestor);
                             break;
 
                         case "6":
-                            resolverTicket(objGestor, objFlujoTicket);
+                            registrarError(objGestor);
                             break;
 
                         case "7":
-                            cerrarTicket(objGestor, objFlujoTicket);
+                            resolverTicket(objGestor, objFlujoTicket);
                             break;
 
                         case "8":
-                            objGestor.generarResumenControl();
+                            escalarTicket(objGestor, objFlujoTicket);
                             break;
 
                         case "9":
+                            cerrarTicket(objGestor, objFlujoTicket);
+                            break;
+
+                        case "10":
+                            objGestor.generarMetricas();
+                            break;
+
+                        case "11":
                             blnContinuar = false;
                             Console.WriteLine("\nGracias por utilizar el sistema de soporte.");
                             break;
 
                         default:
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Opcion no valida. Ingrese un numero del 1 al 9.");
+                            Console.WriteLine("Opcion no valida. Ingrese un numero del 1 al 11.");
                             Console.ResetColor();
                             break;
                     }
@@ -164,6 +174,55 @@ namespace TicketsSoporte
             Console.WriteLine("\nTicket creado correctamente.");
             Console.ResetColor();
             objTicket.mostrarResumen();
+        }
+
+        static void asignarTicket(GestorTickets objGestor)
+        {
+            Ticket objTicket = solicitarTicket(objGestor);
+
+            Console.WriteLine("Tecnicos disponibles:");
+            for (int i = 0; i < objGestor.lstTecnicos.Count; i++)
+            {
+                Console.WriteLine($" {i + 1}. {objGestor.lstTecnicos[i].strNombre} - {objGestor.lstTecnicos[i].strEspecialidad}");
+            }
+
+            Console.Write("Seleccione tecnico (Enter para asignacion automatica): ");
+            string strOpcion = Console.ReadLine()?.Trim();
+
+            if (string.IsNullOrEmpty(strOpcion))
+            {
+                objGestor.asignarTicket(objTicket.intNumero);
+            }
+            else
+            {
+                int intIndice = int.Parse(strOpcion) - 1;
+                if (intIndice < 0 || intIndice >= objGestor.lstTecnicos.Count)
+                {
+                    throw new ArgumentOutOfRangeException("Tecnico", "Seleccion fuera de rango.");
+                }
+
+                objGestor.asignarTicket(objTicket.intNumero, objGestor.lstTecnicos[intIndice].strId);
+            }
+
+            Console.WriteLine("Ticket asignado correctamente.");
+            objTicket.mostrarBitacora();
+        }
+
+        static void escalarTicket(GestorTickets objGestor, FlujoTicket objFlujoTicket)
+        {
+            Ticket objTicket = solicitarTicket(objGestor);
+
+            if (!objFlujoTicket.puedeCambiarEstado(objTicket.strEstado, "Escalado"))
+            {
+                throw new InvalidOperationException("El flujo no permite escalar el ticket desde el estado actual.");
+            }
+
+            Console.Write("Nueva prioridad (Alta/Critica): ");
+            string strNuevaPrioridad = Console.ReadLine();
+
+            objGestor.escalarTicket(objTicket.intNumero, strNuevaPrioridad);
+            Console.WriteLine("Ticket escalado correctamente.");
+            objTicket.mostrarBitacora();
         }
 
         static void registrarError(GestorTickets objGestor)

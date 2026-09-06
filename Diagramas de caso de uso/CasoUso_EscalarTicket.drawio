@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="app.diagrams.net" agent="Claude Code" version="24.0.0">
-  <diagram name="Caso de Uso - Cerrar Ticket" id="ucCerrarTicket">
+  <diagram name="Caso de Uso - Escalar Ticket" id="ucEscalarTicket">
     <mxGraphModel dx="900" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="480" math="0" shadow="0">
       <root>
         <mxCell id="0" />
@@ -14,7 +14,7 @@
           <mxGeometry x="60" y="180" width="40" height="60" as="geometry" />
         </mxCell>
 
-        <mxCell id="ucCerrar" value="Cerrar ticket" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="ucEscalar" value="Escalar Ticket" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="440" y="60" width="170" height="60" as="geometry" />
         </mxCell>
 
@@ -22,12 +22,16 @@
           <mxGeometry x="260" y="180" width="170" height="60" as="geometry" />
         </mxCell>
 
-        <mxCell id="ucValidarFlujo" value="Validar flujo:&#10;Resuelto -&gt; Cerrado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+        <mxCell id="ucValidarFlujo" value="Validar flujo:&#10;-&gt; Escalado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
           <mxGeometry x="470" y="180" width="170" height="60" as="geometry" />
         </mxCell>
 
-        <mxCell id="ucBitacora" value="Registrar cierre&#10;en bitacora" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+        <mxCell id="ucSubirPrioridad" value="Incrementar&#10;prioridad" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
           <mxGeometry x="680" y="180" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucAsignarTicket" value="Asignar Ticket&#10;(tecnico senior)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="470" y="300" width="170" height="60" as="geometry" />
         </mxCell>
 
         <mxCell id="ucNoExiste" value="Notificar ticket&#10;no encontrado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
@@ -35,14 +39,15 @@
         </mxCell>
 
         <mxCell id="ucFlujoInvalido" value="Rechazar cambio&#10;de estado invalido" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="470" y="300" width="170" height="60" as="geometry" />
+          <mxGeometry x="680" y="300" width="170" height="60" as="geometry" />
         </mxCell>
 
-        <mxCell id="a1" style="endArrow=none;html=1;" edge="1" parent="1" source="actorTecnico" target="ucCerrar"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="a1" style="endArrow=none;html=1;" edge="1" parent="1" source="actorTecnico" target="ucEscalar"><mxGeometry relative="1" as="geometry" /></mxCell>
 
-        <mxCell id="i1" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucCerrar" target="ucBuscar"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="i2" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucCerrar" target="ucValidarFlujo"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="i3" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucValidarFlujo" target="ucBitacora"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i1" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucEscalar" target="ucBuscar"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i2" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucEscalar" target="ucValidarFlujo"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i3" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucValidarFlujo" target="ucSubirPrioridad"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i4" value="&#171;include&#187;" style="endArrow=classic;endFill=1;html=1;dashed=1;" edge="1" parent="1" source="ucEscalar" target="ucAsignarTicket"><mxGeometry relative="1" as="geometry" /></mxCell>
 
         <mxCell id="e1" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucNoExiste" target="ucBuscar"><mxGeometry relative="1" as="geometry" /></mxCell>
         <mxCell id="e2" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucFlujoInvalido" target="ucValidarFlujo"><mxGeometry relative="1" as="geometry" /></mxCell>

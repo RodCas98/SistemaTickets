@@ -1,7 +1,8 @@
 namespace TicketsSoporte.logica
 {
     /// <summary>
-    /// Define y valida el flujo de estados permitido de un ticket: Abierto -> Asignado -> Resuelto -> Cerrado.
+    /// Define y valida el flujo de estados permitido de un ticket:
+    /// Abierto -> Asignado -> (Escalado) -> Resuelto -> Cerrado.
     /// </summary>
     public class FlujoTicket
     {
@@ -12,7 +13,8 @@ namespace TicketsSoporte.logica
             dicTransiciones = new Dictionary<string, List<string>>
             {
                 { "Abierto", new List<string> { "Asignado" } },
-                { "Asignado", new List<string> { "Resuelto" } },
+                { "Asignado", new List<string> { "Escalado", "Resuelto" } },
+                { "Escalado", new List<string> { "Asignado", "Resuelto" } },
                 { "Resuelto", new List<string> { "Cerrado", "Asignado" } },
                 { "Cerrado", new List<string>() }
             };
@@ -26,7 +28,8 @@ namespace TicketsSoporte.logica
         public void mostrarFlujo()
         {
             Console.WriteLine("\n=== FLUJO DE ESTADOS DEL TICKET ===");
-            Console.WriteLine(" Abierto -> Asignado -> Resuelto -> Cerrado");
+            Console.WriteLine(" Abierto -> Asignado -> Escalado -> Resuelto -> Cerrado");
+            Console.WriteLine("              \\<--------/  (reasignacion tras escalar)");
             Console.WriteLine("                           \\-> Asignado (reapertura)");
             foreach (KeyValuePair<string, List<string>> objPar in dicTransiciones)
             {

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Claude Code" version="24.0.0">
+  <diagram name="Caso de Uso - Generar Metricas" id="ucGenerarMetricas">
+    <mxGraphModel dx="900" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="420" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="sys" value="Sistema de Tickets" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="220" y="30" width="600" height="320" as="geometry" />
+        </mxCell>
+
+        <mxCell id="actorAdmin" value="Administrador" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="60" y="150" width="40" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucMetricas" value="Generar Metricas" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="430" y="60" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucContarEstados" value="Contar tickets&#10;por estado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="250" y="200" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucContarPrioridad" value="Contar tickets&#10;por prioridad" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="450" y="200" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucContarEscalados" value="Contar tickets&#10;escalados" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="650" y="200" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucCargaTecnico" value="Calcular carga&#10;por tecnico" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="450" y="280" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a1" style="endArrow=none;html=1;" edge="1" parent="1" source="actorAdmin" target="ucMetricas"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="i1" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucMetricas" target="ucContarEstados"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i2" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucMetricas" target="ucContarPrioridad"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i3" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucMetricas" target="ucContarEscalados"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i4" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucMetricas" target="ucCargaTecnico"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

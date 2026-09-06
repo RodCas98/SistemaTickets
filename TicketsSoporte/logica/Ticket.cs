@@ -1,7 +1,7 @@
 namespace TicketsSoporte.logica
 {
     /// <summary>
-    /// Representa un ticket de soporte y su ciclo de vida: Abierto -> Asignado -> Resuelto -> Cerrado.
+    /// Representa un ticket de soporte y su ciclo de vida: Abierto -> Asignado -> (Escalado) -> Resuelto -> Cerrado.
     /// </summary>
     public class Ticket
     {
@@ -13,6 +13,7 @@ namespace TicketsSoporte.logica
         public string strEstado { get; set; }
         public DateTime dtFechaCreacion { get; set; }
         public string strSolucion { get; set; }
+        public bool blnEscalado { get; set; }
 
         public Solicitante objSolicitante { get; set; }
         public Tecnico objTecnicoAsignado { get; set; }
@@ -35,10 +36,34 @@ namespace TicketsSoporte.logica
 
         public void asignar(Tecnico objTecnico)
         {
+            if (objTecnicoAsignado != null)
+            {
+                objTecnicoAsignado.intTicketsAsignados--;
+                objBitacora.registrarEvento($"Ticket reasignado de {objTecnicoAsignado.strNombre} a {objTecnico.strNombre} ({objTecnico.strEspecialidad})");
+            }
+            else
+            {
+                objBitacora.registrarEvento($"Ticket asignado a {objTecnico.strNombre} ({objTecnico.strEspecialidad})");
+            }
+
             objTecnicoAsignado = objTecnico;
             objTecnico.intTicketsAsignados++;
             strEstado = "Asignado";
-            objBitacora.registrarEvento($"Ticket asignado a {objTecnico.strNombre} ({objTecnico.strEspecialidad})");
+        }
+
+        public void escalar(string strNuevaPrioridad, Tecnico objTecnicoSenior)
+        {
+            string strPrioridadAnterior = strPrioridad;
+            strPrioridad = strNuevaPrioridad;
+            blnEscalado = true;
+            strEstado = "Escalado";
+            objBitacora.registrarEvento($"Ticket escalado - Prioridad: {strPrioridadAnterior} -> {strNuevaPrioridad}");
+
+            if (objTecnicoSenior != null && objTecnicoSenior != objTecnicoAsignado)
+            {
+                asignar(objTecnicoSenior);
+                strEstado = "Escalado";
+            }
         }
 
         public void registrarError(string strTipo, string strDescripcionError, string strImpacto)
@@ -62,7 +87,7 @@ namespace TicketsSoporte.logica
         public void mostrarResumen()
         {
             Console.WriteLine($"  Ticket #{intNumero} - {strTitulo}");
-            Console.WriteLine($"  Estado: {strEstado} | Categoria: {strCategoria} | Prioridad: {strPrioridad}");
+            Console.WriteLine($"  Estado: {strEstado}{(blnEscalado ? " (escalado)" : "")} | Categoria: {strCategoria} | Prioridad: {strPrioridad}");
             Console.WriteLine($"  Solicitante: {objSolicitante.strNombre}");
             Console.WriteLine($"  Tecnico asignado: {(objTecnicoAsignado != null ? objTecnicoAsignado.strNombre : "Sin asignar")}");
         }

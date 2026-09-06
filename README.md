@@ -4,20 +4,28 @@ Proyecto de diseno y desarrollo de un sistema de tickets de soporte tecnico corp
 
 ## Contenido
 
-- **Diagramas de flujo**: diagrama de flujo del ciclo de vida del ticket (Abierto -> Asignado -> Resuelto -> Cerrado)
-- **Diagramas de caso de uso**: Crear Ticket, Registrar Error, Resolver Ticket, Cerrar Ticket, Generar Resumen de Control
+- **Diagramas de flujo**: diagrama de flujo del ciclo de vida del ticket (Abierto -> Asignado -> Escalado -> Resuelto -> Cerrado)
+- **Diagramas de caso de uso**: Crear Ticket, Asignar Ticket, Resolver Ticket, Escalar Ticket, Generar Metricas
 - **Diagramas de clase**: diagrama de clases del sistema
 - **TicketsSoporte**: proyecto en C# (.NET), con las clases del sistema en la carpeta `logica`
+
+## Casos de uso
+
+1. **Crear Ticket**: el solicitante reporta un problema (titulo, descripcion, categoria, prioridad); el sistema numera el ticket e incluye la asignacion automatica.
+2. **Asignar Ticket**: el gestor asigna (o reasigna) el ticket al tecnico con menor carga dentro de la especialidad, o de forma manual a un tecnico especifico.
+3. **Resolver Ticket**: el tecnico registra la solucion aplicada; incluye el registro de errores en la bitacora y el cierre del ticket.
+4. **Escalar Ticket**: el tecnico sube la prioridad del ticket y lo reasigna a un tecnico de mayor experiencia en la misma especialidad.
+5. **Generar Metricas**: el administrador obtiene indicadores de tickets por estado, por prioridad, tickets escalados y carga por tecnico.
 
 ## Modelo
 
 - `Usuario` (abstracta): clase base con id, nombre y correo.
 - `Tecnico` : `Usuario` — especialidad, nivel de experiencia y carga de tickets asignados.
 - `Solicitante` : `Usuario` — departamento y extension.
-- `Ticket`: numero, titulo, descripcion, categoria, prioridad, estado, solicitante, tecnico asignado y bitacora.
+- `Ticket`: numero, titulo, descripcion, categoria, prioridad, estado, solicitante, tecnico asignado, indicador de escalado y bitacora.
 - `Bitacora`: historial de eventos de un ticket.
-- `FlujoTicket`: valida las transiciones de estado permitidas.
-- `GestorTickets`: administra tecnicos, solicitantes y tickets; asigna automaticamente el tecnico con menor carga segun la categoria.
+- `FlujoTicket`: valida las transiciones de estado permitidas (incluye el estado Escalado).
+- `GestorTickets`: administra tecnicos, solicitantes y tickets; implementa la asignacion automatica/manual, la escalacion y la generacion de metricas.
 
 ## Diagramas
 
