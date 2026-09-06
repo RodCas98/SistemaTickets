@@ -10,6 +10,7 @@ namespace TicketsSoporte.logica
         public List<Solicitante> lstSolicitantes { get; set; }
         public List<Ticket> lstTickets { get; set; }
 
+        private readonly FlujoTicket objFlujo;
         private int intSiguienteNumero;
 
         public GestorTicket()
@@ -17,6 +18,7 @@ namespace TicketsSoporte.logica
             lstTecnicos = new List<Tecnico>();
             lstSolicitantes = new List<Solicitante>();
             lstTickets = new List<Ticket>();
+            objFlujo = new FlujoTicket();
             intSiguienteNumero = 1;
         }
 
@@ -80,6 +82,11 @@ namespace TicketsSoporte.logica
         {
             Ticket objTicket = buscarTicket(intNumero);
 
+            if (!objFlujo.puedeCambiarEstado(objTicket.strEstado, "Escalado"))
+            {
+                throw new InvalidOperationException("El flujo no permite escalar el ticket desde el estado actual.");
+            }
+
             Tecnico objTecnicoSenior = lstTecnicos
                 .Where(t => t.strEspecialidad.Equals(objTicket.strCategoria, StringComparison.OrdinalIgnoreCase))
                 .OrderByDescending(t => t.intNivelExperiencia)
@@ -88,6 +95,43 @@ namespace TicketsSoporte.logica
 
             objTicket.escalar(strNuevaPrioridad, objTecnicoSenior);
             return objTicket;
+        }
+
+        /// <summary>
+        /// Caso de uso "Resolver Ticket": valida el flujo antes de registrar la solucion.
+        /// </summary>
+        public Ticket resolverTicket(int intNumero, string strSolucion)
+        {
+            Ticket objTicket = buscarTicket(intNumero);
+
+            if (!objFlujo.puedeCambiarEstado(objTicket.strEstado, "Resuelto"))
+            {
+                throw new InvalidOperationException("El flujo no permite resolver el ticket desde el estado actual.");
+            }
+
+            objTicket.resolver(strSolucion);
+            return objTicket;
+        }
+
+        /// <summary>
+        /// Cierra el ticket, validando el flujo de estados.
+        /// </summary>
+        public Ticket cerrarTicket(int intNumero)
+        {
+            Ticket objTicket = buscarTicket(intNumero);
+
+            if (!objFlujo.puedeCambiarEstado(objTicket.strEstado, "Cerrado"))
+            {
+                throw new InvalidOperationException("El flujo no permite cerrar el ticket desde el estado actual.");
+            }
+
+            objTicket.cerrar();
+            return objTicket;
+        }
+
+        public void mostrarFlujo()
+        {
+            objFlujo.mostrarFlujo();
         }
 
         private Tecnico asignarTecnicoAutomatico(string strCategoria)

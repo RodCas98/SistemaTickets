@@ -32,9 +32,6 @@ namespace TicketsSoporte
             objGestor.lstSolicitantes.Add(objSolicitanteContabilidad);
             objGestor.lstSolicitantes.Add(objSolicitanteVentas);
 
-            // 4. Flujo del ticket: define el ciclo Abierto -> Asignado -> Resuelto -> Cerrado.
-            FlujoTicket objFlujoTicket = new FlujoTicket();
-
             bool blnContinuar = true;
 
             while (blnContinuar)
@@ -69,7 +66,7 @@ namespace TicketsSoporte
                             break;
 
                         case "2":
-                            objFlujoTicket.mostrarFlujo();
+                            objGestor.mostrarFlujo();
                             break;
 
                         case "3":
@@ -89,15 +86,15 @@ namespace TicketsSoporte
                             break;
 
                         case "7":
-                            resolverTicket(objGestor, objFlujoTicket);
+                            resolverTicket(objGestor);
                             break;
 
                         case "8":
-                            escalarTicket(objGestor, objFlujoTicket);
+                            escalarTicket(objGestor);
                             break;
 
                         case "9":
-                            cerrarTicket(objGestor, objFlujoTicket);
+                            cerrarTicket(objGestor);
                             break;
 
                         case "10":
@@ -213,14 +210,9 @@ namespace TicketsSoporte
             objTicket.mostrarBitacora();
         }
 
-        static void escalarTicket(GestorTicket objGestor, FlujoTicket objFlujoTicket)
+        static void escalarTicket(GestorTicket objGestor)
         {
             Ticket objTicket = solicitarTicket(objGestor);
-
-            if (!objFlujoTicket.puedeCambiarEstado(objTicket.strEstado, "Escalado"))
-            {
-                throw new InvalidOperationException("El flujo no permite escalar el ticket desde el estado actual.");
-            }
 
             Console.Write("Nueva prioridad (Alta/Critica): ");
             string strNuevaPrioridad = Console.ReadLine();
@@ -248,33 +240,23 @@ namespace TicketsSoporte
             objTicket.mostrarBitacora();
         }
 
-        static void resolverTicket(GestorTicket objGestor, FlujoTicket objFlujoTicket)
+        static void resolverTicket(GestorTicket objGestor)
         {
             Ticket objTicket = solicitarTicket(objGestor);
-
-            if (!objFlujoTicket.puedeCambiarEstado(objTicket.strEstado, "Resuelto"))
-            {
-                throw new InvalidOperationException("El flujo no permite resolver el ticket desde el estado actual.");
-            }
 
             Console.Write("Solucion aplicada: ");
             string strSolucion = Console.ReadLine();
 
-            objTicket.resolver(strSolucion);
+            objGestor.resolverTicket(objTicket.intNumero, strSolucion);
             Console.WriteLine("Ticket resuelto correctamente.");
             objTicket.mostrarBitacora();
         }
 
-        static void cerrarTicket(GestorTicket objGestor, FlujoTicket objFlujoTicket)
+        static void cerrarTicket(GestorTicket objGestor)
         {
             Ticket objTicket = solicitarTicket(objGestor);
 
-            if (!objFlujoTicket.puedeCambiarEstado(objTicket.strEstado, "Cerrado"))
-            {
-                throw new InvalidOperationException("El flujo no permite cerrar el ticket desde el estado actual.");
-            }
-
-            objTicket.cerrar();
+            objGestor.cerrarTicket(objTicket.intNumero);
             Console.WriteLine("Ticket cerrado correctamente.");
             objTicket.mostrarBitacora();
         }

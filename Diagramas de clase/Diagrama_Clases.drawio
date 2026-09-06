@@ -110,19 +110,19 @@
 
         <!-- GestorTicket -->
         <mxCell id="gestor" value="GestorTicket" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#ffe6cc;strokeColor=#d79b00;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="20" y="490" width="280" height="245" as="geometry" />
+          <mxGeometry x="20" y="480" width="280" height="300" as="geometry" />
         </mxCell>
         <mxCell id="gestor_sep1" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="gestor">
           <mxGeometry y="30" width="280" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="gestor_attrs" value="- lstTecnicos: List&lt;Tecnico&gt;&#10;- lstSolicitantes: List&lt;Solicitante&gt;&#10;- lstTickets: List&lt;Ticket&gt;&#10;- intSiguienteNumero: int" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="gestor">
-          <mxGeometry y="38" width="280" height="65" as="geometry" />
+        <mxCell id="gestor_attrs" value="- lstTecnicos: List&lt;Tecnico&gt;&#10;- lstSolicitantes: List&lt;Solicitante&gt;&#10;- lstTickets: List&lt;Ticket&gt;&#10;- objFlujo: FlujoTicket&#10;- intSiguienteNumero: int" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="gestor">
+          <mxGeometry y="38" width="280" height="75" as="geometry" />
         </mxCell>
         <mxCell id="gestor_sep2" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="gestor">
-          <mxGeometry y="103" width="280" height="8" as="geometry" />
+          <mxGeometry y="113" width="280" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="gestor_methods" value="+ crearTicket(titulo, desc, cat,&#10;  prioridad, solicitante): Ticket&#10;+ asignarTicket(numero): Ticket&#10;+ asignarTicket(numero, idTecnico): Ticket&#10;+ escalarTicket(numero, prioridad): Ticket&#10;- asignarTecnicoAutomatico(cat): Tecnico&#10;+ buscarTicket(numero): Ticket&#10;+ mostrarTickets(): void&#10;+ generarMetricas(): void" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="gestor">
-          <mxGeometry y="111" width="280" height="134" as="geometry" />
+        <mxCell id="gestor_methods" value="+ crearTicket(titulo, desc, cat,&#10;  prioridad, solicitante): Ticket&#10;+ asignarTicket(numero): Ticket&#10;+ asignarTicket(numero, idTecnico): Ticket&#10;+ escalarTicket(numero, prioridad): Ticket&#10;+ resolverTicket(numero, solucion): Ticket&#10;+ cerrarTicket(numero): Ticket&#10;- asignarTecnicoAutomatico(cat): Tecnico&#10;+ buscarTicket(numero): Ticket&#10;+ mostrarTickets(): void&#10;+ mostrarFlujo(): void&#10;+ generarMetricas(): void" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="gestor">
+          <mxGeometry y="121" width="280" height="174" as="geometry" />
         </mxCell>
 
         <!-- Inheritance: Tecnico extiende Persona -->
@@ -200,11 +200,14 @@
           <mxGeometry x="545" y="600" width="30" height="20" as="geometry" />
         </mxCell>
 
-        <!-- GestorTicket - FlujoTicket (dependencia) -->
-        <mxCell id="dep1" style="endArrow=open;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;entryX=0;entryY=0.7;" edge="1" parent="1" source="gestor" target="flujo">
+        <!-- GestorTicket - FlujoTicket -->
+        <mxCell id="dep1" value="" style="endArrow=classic;startArrow=none;endFill=1;html=1;exitX=0.5;exitY=0;entryX=0;entryY=0.7;" edge="1" parent="1" source="gestor" target="flujo">
           <mxGeometry relative="1" as="geometry">
             <Array as="points"><mxPoint x="160" y="260" /></Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="dep1l1" value="1" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="145" y="200" width="20" height="20" as="geometry" />
         </mxCell>
 
       </root>

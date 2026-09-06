@@ -6,6 +6,7 @@ public class GestorTicket
     private ArrayList<Tecnico> tecnicos;
     private ArrayList<Solicitante> solicitantes;
     private ArrayList<Ticket> tickets;
+    private FlujoTicket flujo;
     private int siguienteNumero;
 
     public GestorTicket()
@@ -13,6 +14,7 @@ public class GestorTicket
         tecnicos = new ArrayList<Tecnico>();
         solicitantes = new ArrayList<Solicitante>();
         tickets = new ArrayList<Ticket>();
+        flujo = new FlujoTicket();
         siguienteNumero = 1;
     }
 
@@ -67,6 +69,11 @@ public class GestorTicket
     public Ticket escalarTicket(int numero, String nuevaPrioridad)
     {
         Ticket ticket = buscarTicket(numero);
+
+        if (!flujo.puedeCambiarEstado(ticket.getEstado(), "Escalado")) {
+            throw new IllegalStateException("El flujo no permite escalar el ticket desde el estado actual.");
+        }
+
         Tecnico tecnicoSenior = null;
 
         for (Tecnico t : tecnicos) {
@@ -79,6 +86,41 @@ public class GestorTicket
 
         ticket.escalar(nuevaPrioridad, tecnicoSenior);
         return ticket;
+    }
+
+    /**
+     * Caso de uso "Resolver Ticket": valida el flujo antes de registrar la solucion.
+     */
+    public Ticket resolverTicket(int numero, String solucion)
+    {
+        Ticket ticket = buscarTicket(numero);
+
+        if (!flujo.puedeCambiarEstado(ticket.getEstado(), "Resuelto")) {
+            throw new IllegalStateException("El flujo no permite resolver el ticket desde el estado actual.");
+        }
+
+        ticket.resolver(solucion);
+        return ticket;
+    }
+
+    /**
+     * Cierra el ticket, validando el flujo de estados.
+     */
+    public Ticket cerrarTicket(int numero)
+    {
+        Ticket ticket = buscarTicket(numero);
+
+        if (!flujo.puedeCambiarEstado(ticket.getEstado(), "Cerrado")) {
+            throw new IllegalStateException("El flujo no permite cerrar el ticket desde el estado actual.");
+        }
+
+        ticket.cerrar();
+        return ticket;
+    }
+
+    public void mostrarFlujo()
+    {
+        flujo.mostrarFlujo();
     }
 
     private Tecnico asignarTecnicoAutomatico(String categoria)
