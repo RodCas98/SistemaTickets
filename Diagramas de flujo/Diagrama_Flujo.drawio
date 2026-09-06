@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Claude Code" version="24.0.0">
+  <diagram name="Flujo Sistema de Tickets" id="flujoTickets">
+    <mxGraphModel dx="1000" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="s1" value="Inicio" style="shape=terminator;whiteSpace=wrap;html=1;rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="360" y="40" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s2" value="Solicitante reporta&#10;un problema" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="340" y="120" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s3" value="Crear ticket:&#10;titulo, descripcion,&#10;categoria, prioridad" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="340" y="210" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s4" value="Ticket = Abierto" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="340" y="310" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r1" value="&#191;Existe tecnico&#10;disponible con la&#10;especialidad o General?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="320" y="400" width="240" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s5a" value="Asignar automaticamente al&#10;tecnico con menor carga" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="120" y="540" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s5b" value="El ticket queda&#10;sin asignar" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="560" y="540" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s6" value="Ticket = Asignado" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="340" y="650" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s7" value="Tecnico registra&#10;errores en la bitacora" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="340" y="740" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r2" value="&#191;Tecnico aplico&#10;una solucion?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="330" y="840" width="220" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s8" value="Registrar solucion&#10;aplicada" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="340" y="970" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s9" value="Ticket = Resuelto" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1060" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r3" value="&#191;Solicitante&#10;confirma que el&#10;problema quedo resuelto?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="320" y="1150" width="240" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s10" value="Reabrir ticket&#10;(vuelve a Asignado)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1170" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s11" value="Cerrar ticket" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1290" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s12" value="Ticket = Cerrado" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1380" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s13" value="Generar resumen&#10;de control" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1470" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s14" value="Fin" style="shape=terminator;whiteSpace=wrap;html=1;rounded=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="360" y="1550" width="160" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="f1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s1" target="s2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s2" target="s3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s3" target="s4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s4" target="r1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="f5a" value="S&#237;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="r1" target="s5a"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f5b" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="r1" target="s5b"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="f6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s5a" target="s6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f6b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.2;" edge="1" parent="1" source="s5b" target="s6">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="660" y="670" /></Array></mxGeometry>
+        </mxCell>
+
+        <mxCell id="f7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s6" target="s7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s7" target="r2"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="f9a" value="S&#237;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="r2" target="s8"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f9b" value="No, sigue&#10;investigando" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=1;entryY=0.2;" edge="1" parent="1" source="r2" target="s7">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="640" y="885" /></Array></mxGeometry>
+        </mxCell>
+
+        <mxCell id="f10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s8" target="s9"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s9" target="r3"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="f12a" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="r3" target="s10"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f12b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=1;entryY=0.1;" edge="1" parent="1" source="s10" target="s6">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="840" y="1200" /><mxPoint x="840" y="660" /></Array></mxGeometry>
+        </mxCell>
+
+        <mxCell id="f13" value="S&#237;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="r3" target="s11"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s11" target="s12"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s12" target="s13"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" edge="1" parent="1" source="s13" target="s14"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

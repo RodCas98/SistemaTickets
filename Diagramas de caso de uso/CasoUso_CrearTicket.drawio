@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Claude Code" version="24.0.0">
+  <diagram name="Caso de Uso - Crear Ticket" id="ucCrearTicket">
+    <mxGraphModel dx="900" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="sys" value="Sistema de Tickets" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=none;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="220" y="30" width="600" height="460" as="geometry" />
+        </mxCell>
+
+        <mxCell id="actorSolicitante" value="Solicitante" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="60" y="230" width="40" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucCrear" value="Crear ticket" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="440" y="60" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucIngresarDatos" value="Ingresar titulo,&#10;descripcion, categoria&#10;y prioridad" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="260" y="180" width="170" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucSeleccionar" value="Seleccionar&#10;solicitante" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="260" y="300" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucNumerar" value="Asignar numero&#10;consecutivo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="470" y="180" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucAsignarTecnico" value="Asignar tecnico&#10;automaticamente" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="470" y="300" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucBitacora" value="Registrar creacion&#10;en bitacora" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="680" y="180" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucRangoInvalido" value="Notificar seleccion&#10;fuera de rango" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="260" y="400" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ucSinTecnico" value="Dejar ticket&#10;sin asignar" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="680" y="400" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a1" style="endArrow=none;html=1;" edge="1" parent="1" source="actorSolicitante" target="ucCrear"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="i1" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucCrear" target="ucIngresarDatos"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i2" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucCrear" target="ucSeleccionar"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i3" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucCrear" target="ucNumerar"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i4" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucCrear" target="ucAsignarTecnico"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="i5" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucNumerar" target="ucBitacora"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="e1" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucRangoInvalido" target="ucSeleccionar"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" value="" style="endArrow=classic;endFill=1;html=1;" edge="1" parent="1" source="ucSinTecnico" target="ucAsignarTecnico"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

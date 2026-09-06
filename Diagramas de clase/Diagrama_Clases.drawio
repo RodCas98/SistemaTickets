@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="Claude Code" version="24.0.0">
+  <diagram name="Diagrama de Clases Sistema de Tickets" id="clasesTickets">
+    <mxGraphModel dx="1000" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Usuario (abstracta) -->
+        <mxCell id="usuario" value="&#171;abstract&#187;&#10;Usuario" style="swimlane;fontStyle=3;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="560" y="40" width="240" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="usuario_sep1" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="usuario">
+          <mxGeometry y="30" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="usuario_attrs" value="- strId: string&#10;- strNombre: string&#10;- strCorreo: string" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="usuario">
+          <mxGeometry y="38" width="240" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="usuario_sep2" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="usuario">
+          <mxGeometry y="88" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="usuario_methods" value="+ mostrarInformacion(): void&#10;  {abstract}" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="usuario">
+          <mxGeometry y="96" width="240" height="54" as="geometry" />
+        </mxCell>
+
+        <!-- Tecnico -->
+        <mxCell id="tecnico" value="Tecnico" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#d5e8d4;strokeColor=#82b366;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="260" y="290" width="260" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="tecnico_sep1" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="tecnico">
+          <mxGeometry y="30" width="260" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="tecnico_attrs" value="- strEspecialidad: string&#10;- intNivelExperiencia: int&#10;- intTicketsAsignados: int" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="tecnico">
+          <mxGeometry y="38" width="260" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="tecnico_sep2" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="tecnico">
+          <mxGeometry y="88" width="260" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="tecnico_methods" value="+ mostrarInformacion(): void" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="tecnico">
+          <mxGeometry y="96" width="260" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Solicitante -->
+        <mxCell id="solicitante" value="Solicitante" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#d5e8d4;strokeColor=#82b366;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="820" y="290" width="260" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="solicitante_sep1" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="solicitante">
+          <mxGeometry y="30" width="260" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="solicitante_attrs" value="- strDepartamento: string&#10;- strExtension: string" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="solicitante">
+          <mxGeometry y="38" width="260" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="solicitante_sep2" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="solicitante">
+          <mxGeometry y="73" width="260" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="solicitante_methods" value="+ mostrarInformacion(): void" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="solicitante">
+          <mxGeometry y="81" width="260" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Ticket -->
+        <mxCell id="ticket" value="Ticket" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="560" y="490" width="280" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ticket_sep1" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="ticket">
+          <mxGeometry y="30" width="280" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ticket_attrs" value="- intNumero: int&#10;- strTitulo: string&#10;- strDescripcion: string&#10;- strCategoria: string&#10;- strPrioridad: string&#10;- strEstado: string&#10;- dtFechaCreacion: DateTime&#10;- strSolucion: string&#10;- objSolicitante: Solicitante&#10;- objTecnicoAsignado: Tecnico&#10;- objBitacora: Bitacora" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="ticket">
+          <mxGeometry y="38" width="280" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ticket_sep2" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="ticket">
+          <mxGeometry y="178" width="280" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ticket_methods" value="+ asignar(t: Tecnico): void&#10;+ registrarError(tipo, desc, impacto): void&#10;+ resolver(solucion: string): void&#10;+ cerrar(): void&#10;+ mostrarResumen(): void&#10;+ mostrarBitacora(): void" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="ticket">
+          <mxGeometry y="186" width="280" height="44" as="geometry" />
+        </mxCell>
+
+        <!-- Bitacora -->
+        <mxCell id="bitacora" value="Bitacora" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#f5f5f5;strokeColor=#666666;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="920" y="530" width="240" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="bitacora_sep1" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="bitacora">
+          <mxGeometry y="30" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="bitacora_attrs" value="- lstRegistros: List&lt;string&gt;" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="bitacora">
+          <mxGeometry y="38" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bitacora_sep2" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="bitacora">
+          <mxGeometry y="68" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="bitacora_methods" value="+ registrarEvento(evento: string): void&#10;+ mostrarBitacora(): void" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="bitacora">
+          <mxGeometry y="76" width="240" height="49" as="geometry" />
+        </mxCell>
+
+        <!-- FlujoTicket -->
+        <mxCell id="flujo" value="FlujoTicket" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#ffe6cc;strokeColor=#d79b00;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="20" y="60" width="260" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="flujo_sep1" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="flujo">
+          <mxGeometry y="30" width="260" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="flujo_attrs" value="- dicTransiciones: Dictionary&lt;string,&#10;  List&lt;string&gt;&gt;" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="flujo">
+          <mxGeometry y="38" width="260" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="flujo_sep2" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="flujo">
+          <mxGeometry y="73" width="260" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="flujo_methods" value="+ puedeCambiarEstado(actual, nuevo): bool&#10;+ mostrarFlujo(): void" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="flujo">
+          <mxGeometry y="81" width="260" height="49" as="geometry" />
+        </mxCell>
+
+        <!-- GestorTickets -->
+        <mxCell id="gestor" value="GestorTickets" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#ffe6cc;strokeColor=#d79b00;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="20" y="490" width="280" height="205" as="geometry" />
+        </mxCell>
+        <mxCell id="gestor_sep1" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="gestor">
+          <mxGeometry y="30" width="280" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="gestor_attrs" value="- lstTecnicos: List&lt;Tecnico&gt;&#10;- lstSolicitantes: List&lt;Solicitante&gt;&#10;- lstTickets: List&lt;Ticket&gt;&#10;- intSiguienteNumero: int" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="gestor">
+          <mxGeometry y="38" width="280" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="gestor_sep2" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="gestor">
+          <mxGeometry y="103" width="280" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="gestor_methods" value="+ crearTicket(titulo, desc, cat,&#10;  prioridad, solicitante): Ticket&#10;- asignarTecnicoAutomatico(cat): Tecnico&#10;+ buscarTicket(numero): Ticket&#10;+ mostrarTickets(): void&#10;+ generarResumenControl(): void" style="text;html=1;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;" vertex="1" parent="gestor">
+          <mxGeometry y="111" width="280" height="94" as="geometry" />
+        </mxCell>
+
+        <!-- Inheritance: Tecnico extiende Usuario -->
+        <mxCell id="inh1" style="endArrow=block;endFill=0;endSize=16;html=1;" edge="1" parent="1" source="tecnico" target="usuario">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Inheritance: Solicitante extiende Usuario -->
+        <mxCell id="inh2" style="endArrow=block;endFill=0;endSize=16;html=1;" edge="1" parent="1" source="solicitante" target="usuario">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Ticket - Solicitante -->
+        <mxCell id="assoc1" value="" style="endArrow=classic;startArrow=none;endFill=1;html=1;" edge="1" parent="1" source="ticket" target="solicitante">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc1l1" value="1" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="800" y="500" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc1l2" value="0..*" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="855" y="440" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Ticket - Tecnico -->
+        <mxCell id="assoc2" value="" style="endArrow=classic;startArrow=none;endFill=1;html=1;" edge="1" parent="1" source="ticket" target="tecnico">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc2l1" value="0..1" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="560" y="500" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc2l2" value="0..*" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="475" y="440" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Ticket - Bitacora (composicion) -->
+        <mxCell id="assoc3" value="" style="startArrow=diamondThin;startFill=1;endArrow=none;html=1;exitX=1;exitY=0.4;entryX=0;entryY=0.5;" edge="1" parent="1" source="ticket" target="bitacora">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc3l1" value="1" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="890" y="595" width="20" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- GestorTickets - Tecnico -->
+        <mxCell id="assoc4" value="" style="endArrow=classic;startArrow=none;endFill=1;html=1;" edge="1" parent="1" source="gestor" target="tecnico">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc4l1" value="1" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="230" y="600" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc4l2" value="0..*" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="250" y="440" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- GestorTickets - Solicitante -->
+        <mxCell id="assoc5" value="" style="endArrow=classic;startArrow=none;endFill=1;html=1;exitX=0.5;exitY=0;entryX=0.2;entryY=1;" edge="1" parent="1" source="gestor" target="solicitante">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="160" y="450" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc5l1" value="1" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="160" y="600" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc5l2" value="0..*" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="850" y="450" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- GestorTickets - Ticket -->
+        <mxCell id="assoc6" value="" style="endArrow=classic;startArrow=none;endFill=1;html=1;" edge="1" parent="1" source="gestor" target="ticket">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc6l1" value="1" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="305" y="600" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc6l2" value="0..*" style="text;html=1;align=center;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="545" y="600" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- GestorTickets - FlujoTicket (dependencia) -->
+        <mxCell id="dep1" style="endArrow=open;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;entryX=0;entryY=0.7;" edge="1" parent="1" source="gestor" target="flujo">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="160" y="260" /></Array>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
