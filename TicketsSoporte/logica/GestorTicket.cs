@@ -4,7 +4,7 @@ namespace TicketsSoporte.logica
     /// Administra tecnicos, solicitantes y tickets; asigna automaticamente el tecnico con menor carga
     /// que coincida con la categoria del ticket (o el de categoria General si no hay coincidencia).
     /// </summary>
-    public class GestorTickets
+    public class GestorTicket
     {
         public List<Tecnico> lstTecnicos { get; set; }
         public List<Solicitante> lstSolicitantes { get; set; }
@@ -12,7 +12,7 @@ namespace TicketsSoporte.logica
 
         private int intSiguienteNumero;
 
-        public GestorTickets()
+        public GestorTicket()
         {
             lstTecnicos = new List<Tecnico>();
             lstSolicitantes = new List<Solicitante>();

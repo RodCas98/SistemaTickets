@@ -1,9 +1,9 @@
 namespace TicketsSoporte.logica
 {
     /// <summary>
-    /// Especializacion de Usuario: empleado que reporta problemas y solicita soporte.
+    /// Especializacion de Persona: empleado que reporta problemas y solicita soporte.
     /// </summary>
-    public class Solicitante : Usuario
+    public class Solicitante : Persona
     {
         public string strDepartamento { get; set; }
         public string strExtension { get; set; }

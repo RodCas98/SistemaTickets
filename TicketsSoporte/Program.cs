@@ -6,7 +6,7 @@ namespace TicketsSoporte
     {
         static void Main(string[] args)
         {
-            // 1. Herencia: Tecnico y Solicitante son tipos especializados de Usuario.
+            // 1. Herencia: Tecnico y Solicitante son tipos especializados de Persona.
             Tecnico objTecnicoSoftware = new Tecnico("T01", "Ana Lopez", "ana@empresa.com", "Software", 2);
             Tecnico objTecnicoHardware = new Tecnico("T02", "Carlos Mendez", "carlos@empresa.com", "Hardware", 2);
             Tecnico objTecnicoGeneral = new Tecnico("T03", "Maria Perez", "maria@empresa.com", "General", 3);
@@ -14,8 +14,8 @@ namespace TicketsSoporte
             Solicitante objSolicitanteContabilidad = new Solicitante("S01", "Luis Ramirez", "luis@empresa.com", "Contabilidad", "1201");
             Solicitante objSolicitanteVentas = new Solicitante("S02", "Karla Gomez", "karla@empresa.com", "Ventas", "1305");
 
-            // 2. Polimorfismo: una lista de Usuario puede contener tecnicos y solicitantes.
-            List<Usuario> lstUsuarios = new List<Usuario>()
+            // 2. Polimorfismo: una lista de Persona puede contener tecnicos y solicitantes.
+            List<Persona> lstPersonas = new List<Persona>()
             {
                 objTecnicoSoftware,
                 objTecnicoHardware,
@@ -25,7 +25,7 @@ namespace TicketsSoporte
             };
 
             // 3. Gestion centralizada: el gestor administra tecnicos, solicitantes y tickets.
-            GestorTickets objGestor = new GestorTickets();
+            GestorTicket objGestor = new GestorTicket();
             objGestor.lstTecnicos.Add(objTecnicoSoftware);
             objGestor.lstTecnicos.Add(objTecnicoHardware);
             objGestor.lstTecnicos.Add(objTecnicoGeneral);
@@ -64,7 +64,7 @@ namespace TicketsSoporte
                     switch (strOpcion)
                     {
                         case "1":
-                            mostrarUsuariosPolimorfismo(lstUsuarios);
+                            mostrarPersonasPolimorfismo(lstPersonas);
                             break;
 
                         case "2":
@@ -127,20 +127,20 @@ namespace TicketsSoporte
         /// <summary>
         /// Demuestra polimorfismo: cada objeto ejecuta su propia version de mostrarInformacion().
         /// </summary>
-        static void mostrarUsuariosPolimorfismo(List<Usuario> lstUsuarios)
+        static void mostrarPersonasPolimorfismo(List<Persona> lstPersonas)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\n=== USUARIOS DEL SISTEMA ===");
             Console.ResetColor();
 
-            foreach (Usuario objUsuario in lstUsuarios)
+            foreach (Persona objPersona in lstPersonas)
             {
-                objUsuario.mostrarInformacion();
+                objPersona.mostrarInformacion();
                 Console.WriteLine();
             }
         }
 
-        static void crearTicket(GestorTickets objGestor)
+        static void crearTicket(GestorTicket objGestor)
         {
             Console.WriteLine("\nSolicitantes disponibles:");
             for (int i = 0; i < objGestor.lstSolicitantes.Count; i++)
@@ -176,7 +176,7 @@ namespace TicketsSoporte
             objTicket.mostrarResumen();
         }
 
-        static void asignarTicket(GestorTickets objGestor)
+        static void asignarTicket(GestorTicket objGestor)
         {
             Ticket objTicket = solicitarTicket(objGestor);
 
@@ -208,7 +208,7 @@ namespace TicketsSoporte
             objTicket.mostrarBitacora();
         }
 
-        static void escalarTicket(GestorTickets objGestor, FlujoTicket objFlujoTicket)
+        static void escalarTicket(GestorTicket objGestor, FlujoTicket objFlujoTicket)
         {
             Ticket objTicket = solicitarTicket(objGestor);
 
@@ -225,7 +225,7 @@ namespace TicketsSoporte
             objTicket.mostrarBitacora();
         }
 
-        static void registrarError(GestorTickets objGestor)
+        static void registrarError(GestorTicket objGestor)
         {
             Ticket objTicket = solicitarTicket(objGestor);
 
@@ -243,7 +243,7 @@ namespace TicketsSoporte
             objTicket.mostrarBitacora();
         }
 
-        static void resolverTicket(GestorTickets objGestor, FlujoTicket objFlujoTicket)
+        static void resolverTicket(GestorTicket objGestor, FlujoTicket objFlujoTicket)
         {
             Ticket objTicket = solicitarTicket(objGestor);
 
@@ -260,7 +260,7 @@ namespace TicketsSoporte
             objTicket.mostrarBitacora();
         }
 
-        static void cerrarTicket(GestorTickets objGestor, FlujoTicket objFlujoTicket)
+        static void cerrarTicket(GestorTicket objGestor, FlujoTicket objFlujoTicket)
         {
             Ticket objTicket = solicitarTicket(objGestor);
 
@@ -274,7 +274,7 @@ namespace TicketsSoporte
             objTicket.mostrarBitacora();
         }
 
-        static Ticket solicitarTicket(GestorTickets objGestor)
+        static Ticket solicitarTicket(GestorTicket objGestor)
         {
             Console.Write("Ingrese numero de ticket: ");
             int intNumero = int.Parse(Console.ReadLine() ?? "0");

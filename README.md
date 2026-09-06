@@ -19,13 +19,13 @@ Proyecto de diseno y desarrollo de un sistema de tickets de soporte tecnico corp
 
 ## Modelo
 
-- `Usuario` (abstracta): clase base con id, nombre y correo.
-- `Tecnico` : `Usuario` — especialidad, nivel de experiencia y carga de tickets asignados.
-- `Solicitante` : `Usuario` — departamento y extension.
+- `Persona` (abstracta): superclase con id, nombre y correo.
+- `Tecnico` : `Persona` — especialidad, nivel de experiencia y carga de tickets asignados.
+- `Solicitante` : `Persona` — departamento y extension.
 - `Ticket`: numero, titulo, descripcion, categoria, prioridad, estado, solicitante, tecnico asignado, indicador de escalado y bitacora.
 - `Bitacora`: historial de eventos de un ticket.
 - `FlujoTicket`: valida las transiciones de estado permitidas (incluye el estado Escalado).
-- `GestorTickets`: administra tecnicos, solicitantes y tickets; implementa la asignacion automatica/manual, la escalacion y la generacion de metricas.
+- `GestorTicket`: administra tecnicos, solicitantes y tickets; implementa la asignacion automatica/manual, la escalacion y la generacion de metricas.
 
 ## Diagramas
 

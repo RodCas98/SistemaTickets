@@ -1,9 +1,9 @@
 namespace TicketsSoporte.logica
 {
     /// <summary>
-    /// Especializacion de Usuario: tecnico de soporte con una especialidad y carga de tickets asignados.
+    /// Especializacion de Persona: tecnico de soporte con una especialidad y carga de tickets asignados.
     /// </summary>
-    public class Tecnico : Usuario
+    public class Tecnico : Persona
     {
         public string strEspecialidad { get; set; }
         public int intNivelExperiencia { get; set; }

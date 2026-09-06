@@ -6,8 +6,8 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
 
-        <!-- Usuario (abstracta) -->
-        <mxCell id="usuario" value="&#171;abstract&#187;&#10;Usuario" style="swimlane;fontStyle=3;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
+        <!-- Persona (abstracta) -->
+        <mxCell id="usuario" value="&#171;abstract&#187;&#10;Persona" style="swimlane;fontStyle=3;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
           <mxGeometry x="560" y="40" width="240" height="150" as="geometry" />
         </mxCell>
         <mxCell id="usuario_sep1" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="usuario">
@@ -108,8 +108,8 @@
           <mxGeometry y="81" width="260" height="49" as="geometry" />
         </mxCell>
 
-        <!-- GestorTickets -->
-        <mxCell id="gestor" value="GestorTickets" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#ffe6cc;strokeColor=#d79b00;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
+        <!-- GestorTicket -->
+        <mxCell id="gestor" value="GestorTicket" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#ffe6cc;strokeColor=#d79b00;horizontalStack=0;resizeParent=0;collapsible=0;swimlaneFillColor=#ffffff;" vertex="1" parent="1">
           <mxGeometry x="20" y="490" width="280" height="245" as="geometry" />
         </mxCell>
         <mxCell id="gestor_sep1" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rounded=0;" vertex="1" parent="gestor">
@@ -125,12 +125,12 @@
           <mxGeometry y="111" width="280" height="134" as="geometry" />
         </mxCell>
 
-        <!-- Inheritance: Tecnico extiende Usuario -->
+        <!-- Inheritance: Tecnico extiende Persona -->
         <mxCell id="inh1" style="endArrow=block;endFill=0;endSize=16;html=1;" edge="1" parent="1" source="tecnico" target="usuario">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
 
-        <!-- Inheritance: Solicitante extiende Usuario -->
+        <!-- Inheritance: Solicitante extiende Persona -->
         <mxCell id="inh2" style="endArrow=block;endFill=0;endSize=16;html=1;" edge="1" parent="1" source="solicitante" target="usuario">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -165,7 +165,7 @@
           <mxGeometry x="890" y="595" width="20" height="20" as="geometry" />
         </mxCell>
 
-        <!-- GestorTickets - Tecnico -->
+        <!-- GestorTicket - Tecnico -->
         <mxCell id="assoc4" value="" style="endArrow=classic;startArrow=none;endFill=1;html=1;" edge="1" parent="1" source="gestor" target="tecnico">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -176,7 +176,7 @@
           <mxGeometry x="250" y="440" width="30" height="20" as="geometry" />
         </mxCell>
 
-        <!-- GestorTickets - Solicitante -->
+        <!-- GestorTicket - Solicitante -->
         <mxCell id="assoc5" value="" style="endArrow=classic;startArrow=none;endFill=1;html=1;exitX=0.5;exitY=0;entryX=0.2;entryY=1;" edge="1" parent="1" source="gestor" target="solicitante">
           <mxGeometry relative="1" as="geometry">
             <Array as="points"><mxPoint x="160" y="450" /></Array>
@@ -189,7 +189,7 @@
           <mxGeometry x="850" y="450" width="30" height="20" as="geometry" />
         </mxCell>
 
-        <!-- GestorTickets - Ticket -->
+        <!-- GestorTicket - Ticket -->
         <mxCell id="assoc6" value="" style="endArrow=classic;startArrow=none;endFill=1;html=1;" edge="1" parent="1" source="gestor" target="ticket">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -200,7 +200,7 @@
           <mxGeometry x="545" y="600" width="30" height="20" as="geometry" />
         </mxCell>
 
-        <!-- GestorTickets - FlujoTicket (dependencia) -->
+        <!-- GestorTicket - FlujoTicket (dependencia) -->
         <mxCell id="dep1" style="endArrow=open;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;entryX=0;entryY=0.7;" edge="1" parent="1" source="gestor" target="flujo">
           <mxGeometry relative="1" as="geometry">
             <Array as="points"><mxPoint x="160" y="260" /></Array>
