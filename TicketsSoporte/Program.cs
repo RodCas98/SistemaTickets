@@ -53,9 +53,10 @@ namespace TicketsSoporte
                 Console.WriteLine(" 7. Resolver ticket");
                 Console.WriteLine(" 8. Escalar ticket");
                 Console.WriteLine(" 9. Cerrar ticket");
-                Console.WriteLine(" 10. Generar metricas");
-                Console.WriteLine(" 11. Salir");
-                Console.Write("\n Seleccione una opcion (1-11): ");
+                Console.WriteLine(" 10. Consultar bitacora de un ticket");
+                Console.WriteLine(" 11. Generar metricas");
+                Console.WriteLine(" 12. Salir");
+                Console.Write("\n Seleccione una opcion (1-12): ");
 
                 try
                 {
@@ -100,17 +101,21 @@ namespace TicketsSoporte
                             break;
 
                         case "10":
-                            objGestor.generarMetricas();
+                            consultarBitacora(objGestor);
                             break;
 
                         case "11":
+                            objGestor.generarMetricas();
+                            break;
+
+                        case "12":
                             blnContinuar = false;
                             Console.WriteLine("\nGracias por utilizar el sistema de soporte.");
                             break;
 
                         default:
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Opcion no valida. Ingrese un numero del 1 al 11.");
+                            Console.WriteLine("Opcion no valida. Ingrese un numero del 1 al 12.");
                             Console.ResetColor();
                             break;
                     }
@@ -271,6 +276,12 @@ namespace TicketsSoporte
 
             objTicket.cerrar();
             Console.WriteLine("Ticket cerrado correctamente.");
+            objTicket.mostrarBitacora();
+        }
+
+        static void consultarBitacora(GestorTicket objGestor)
+        {
+            Ticket objTicket = solicitarTicket(objGestor);
             objTicket.mostrarBitacora();
         }
 
