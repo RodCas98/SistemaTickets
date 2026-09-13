@@ -1,25 +1,51 @@
-public class Tecnico extends Persona
+public class Tecnico extends Usuario
 {
     private String especialidad;
-    private int nivelExperiencia;
-    private int ticketsAsignados;
+    private int cargaActual;
+    private int capacidadMaxima;
 
-    public Tecnico(String id, String nombre, String correo, String especialidad, int nivelExperiencia)
+    public Tecnico(String codigo, String nombre, String correo, String especialidad, int capacidadMaxima)
     {
-        super(id, nombre, correo);
+        super(codigo, nombre, correo);
         this.especialidad = especialidad;
-        this.nivelExperiencia = nivelExperiencia;
-        this.ticketsAsignados = 0;
+        this.cargaActual = 0;
+        this.capacidadMaxima = capacidadMaxima;
     }
 
-    public void incrementarCarga()
+    public String obtenerRol()
     {
-        ticketsAsignados = ticketsAsignados + 1;
+        return "Tecnico";
     }
 
-    public void decrementarCarga()
+    public boolean estaDisponible()
     {
-        ticketsAsignados = ticketsAsignados - 1;
+        return isActivo() && cargaActual < capacidadMaxima;
+    }
+
+    public boolean puedeAtender(String categoria)
+    {
+        return estaDisponible() &&
+               (especialidad.equalsIgnoreCase(categoria) || especialidad.equalsIgnoreCase("General"));
+    }
+
+    public void aumentarCarga()
+    {
+        if (cargaActual < capacidadMaxima) {
+            cargaActual = cargaActual + 1;
+        }
+    }
+
+    public void liberarCarga()
+    {
+        if (cargaActual > 0) {
+            cargaActual = cargaActual - 1;
+        }
+    }
+
+    public void mostrarInformacion()
+    {
+        super.mostrarInformacion();
+        System.out.println(" Especialidad: " + especialidad + " | Carga: " + cargaActual + "/" + capacidadMaxima);
     }
 
     public String getEspecialidad()
@@ -27,19 +53,13 @@ public class Tecnico extends Persona
         return especialidad;
     }
 
-    public int getNivelExperiencia()
+    public int getCargaActual()
     {
-        return nivelExperiencia;
+        return cargaActual;
     }
 
-    public int getTicketsAsignados()
+    public int getCapacidadMaxima()
     {
-        return ticketsAsignados;
-    }
-
-    public void mostrarInformacion()
-    {
-        System.out.println("[Tecnico] " + getId() + " - " + getNombre() + " (" + getCorreo() + ")");
-        System.out.println("  Especialidad: " + especialidad + " | Nivel: " + nivelExperiencia + " | Tickets asignados: " + ticketsAsignados);
+        return capacidadMaxima;
     }
 }

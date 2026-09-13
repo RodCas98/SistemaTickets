@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Ticket
@@ -8,13 +9,11 @@ public class Ticket
     private String categoria;
     private String prioridad;
     private String estado;
-    private String fechaCreacion;
-    private String solucion;
     private boolean escalado;
-
     private Solicitante solicitante;
     private Tecnico tecnicoAsignado;
-    private Bitacora bitacora;
+    private ArrayList<String> bitacora;
+    private ArrayList<String> errores;
 
     public Ticket(int numero, String titulo, String descripcion, String categoria, String prioridad, Solicitante solicitante)
     {
@@ -23,73 +22,92 @@ public class Ticket
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.prioridad = prioridad;
-        this.estado = "Abierto";
-        this.fechaCreacion = new Date().toString();
         this.solicitante = solicitante;
-        this.bitacora = new Bitacora();
+        this.estado = "Abierto";
         this.escalado = false;
-
-        bitacora.registrarEvento("Ticket creado por " + solicitante.getNombre() + " - Categoria: " + categoria + " - Prioridad: " + prioridad);
+        this.bitacora = new ArrayList<String>();
+        this.errores = new ArrayList<String>();
+        registrarBitacora("Ticket creado");
     }
 
-    public void asignar(Tecnico tecnico)
+    public void registrarBitacora(String evento)
     {
-        if (tecnicoAsignado != null) {
-            tecnicoAsignado.decrementarCarga();
-            bitacora.registrarEvento("Ticket reasignado de " + tecnicoAsignado.getNombre() + " a " + tecnico.getNombre() + " (" + tecnico.getEspecialidad() + ")");
-        } else {
-            bitacora.registrarEvento("Ticket asignado a " + tecnico.getNombre() + " (" + tecnico.getEspecialidad() + ")");
+        bitacora.add(new Date() + " - " + evento);
+    }
+
+    public void asignarTecnico(Tecnico tecnico)
+    {
+        if (tecnico == null) {
+            throw new IllegalStateException("No se puede asignar un tecnico nulo.");
+        }
+
+        if (!tecnico.puedeAtender(categoria)) {
+            throw new IllegalStateException("El tecnico no esta disponible o no atiende esta categoria.");
         }
 
         tecnicoAsignado = tecnico;
-        tecnico.incrementarCarga();
+        tecnico.aumentarCarga();
         estado = "Asignado";
-    }
-
-    public void escalar(String nuevaPrioridad, Tecnico tecnicoSenior)
-    {
-        String prioridadAnterior = prioridad;
-        prioridad = nuevaPrioridad;
-        escalado = true;
-        estado = "Escalado";
-        bitacora.registrarEvento("Ticket escalado - Prioridad: " + prioridadAnterior + " -> " + nuevaPrioridad);
-
-        if (tecnicoSenior != null && tecnicoSenior != tecnicoAsignado) {
-            asignar(tecnicoSenior);
-            estado = "Escalado";
-        }
+        registrarBitacora("Asignado a " + tecnico.getNombre());
     }
 
     public void registrarError(String tipo, String descripcionError, String impacto)
     {
-        bitacora.registrarEvento("Error registrado - Tipo: " + tipo + " - Impacto: " + impacto + " - Detalle: " + descripcionError);
+        String error = tipo + ": " + descripcionError + " | Impacto: " + impacto;
+        errores.add(error);
+        registrarBitacora("Error registrado - " + error);
+
+        if (impacto.equalsIgnoreCase("Alto") || impacto.equalsIgnoreCase("Critico")) {
+            escalar("Error de alto impacto");
+        }
     }
 
-    public void resolver(String solucionAplicada)
+    public void resolver(String solucion)
     {
-        solucion = solucionAplicada;
+        if (tecnicoAsignado == null || !estado.equals("Asignado")) {
+            throw new IllegalStateException("Solo se puede resolver un ticket asignado.");
+        }
+
         estado = "Resuelto";
-        bitacora.registrarEvento("Ticket resuelto - Solucion: " + solucionAplicada);
+        registrarBitacora("Solucion registrada: " + solucion);
     }
 
     public void cerrar()
     {
+        if (!estado.equals("Resuelto")) {
+            throw new IllegalStateException("Solo se puede cerrar un ticket resuelto.");
+        }
+
         estado = "Cerrado";
-        bitacora.registrarEvento("Ticket cerrado");
+        if (tecnicoAsignado != null) {
+            tecnicoAsignado.liberarCarga();
+        }
+        registrarBitacora("Ticket cerrado");
+    }
+
+    public void escalar(String motivo)
+    {
+        escalado = true;
+        if (!prioridad.equalsIgnoreCase("Critica")) {
+            prioridad = "Critica";
+        }
+        registrarBitacora("Ticket escalado: " + motivo);
     }
 
     public void mostrarResumen()
     {
-        System.out.println("  Ticket #" + numero + " - " + titulo);
-        System.out.println("  Estado: " + estado + (escalado ? " (escalado)" : "") + " | Categoria: " + categoria + " | Prioridad: " + prioridad);
-        System.out.println("  Solicitante: " + solicitante.getNombre());
-        System.out.println("  Tecnico asignado: " + (tecnicoAsignado != null ? tecnicoAsignado.getNombre() : "Sin asignar"));
+        System.out.println("#" + numero + " | " + titulo + " | Estado: " + estado + " | Prioridad: " + prioridad + " | Categoria: " + categoria);
+        System.out.println(" Solicitante: " + solicitante.getNombre());
+        System.out.println(" Tecnico: " + (tecnicoAsignado != null ? tecnicoAsignado.getNombre() : "Sin asignar") + " | Escalado: " + escalado);
     }
 
     public void mostrarBitacora()
     {
-        mostrarResumen();
-        bitacora.mostrarBitacora();
+        System.out.println();
+        System.out.println("Bitacora del ticket #" + numero);
+        for (String evento : bitacora) {
+            System.out.println("- " + evento);
+        }
     }
 
     public int getNumero()
@@ -137,8 +155,13 @@ public class Ticket
         return tecnicoAsignado;
     }
 
-    public Bitacora getBitacora()
+    public ArrayList<String> getBitacora()
     {
         return bitacora;
+    }
+
+    public ArrayList<String> getErrores()
+    {
+        return errores;
     }
 }
