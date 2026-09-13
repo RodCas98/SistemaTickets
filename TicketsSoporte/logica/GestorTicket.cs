@@ -1,8 +1,8 @@
 namespace TicketsSoporte.logica
 {
     /// <summary>
-    /// Administra tecnicos, solicitantes y tickets; asigna automaticamente el tecnico con menor carga
-    /// que coincida con la categoria del ticket (o el de categoria General si no hay coincidencia).
+    /// Administra tecnicos, solicitantes y tickets; asigna automaticamente al tecnico
+    /// disponible con menor carga que pueda atender la categoria del ticket.
     /// </summary>
     public class GestorTicket
     {
@@ -10,7 +10,6 @@ namespace TicketsSoporte.logica
         public List<Solicitante> lstSolicitantes { get; set; }
         public List<Ticket> lstTickets { get; set; }
 
-        private readonly FlujoTicket objFlujo;
         private int intSiguienteNumero;
 
         public GestorTicket()
@@ -18,7 +17,6 @@ namespace TicketsSoporte.logica
             lstTecnicos = new List<Tecnico>();
             lstSolicitantes = new List<Solicitante>();
             lstTickets = new List<Ticket>();
-            objFlujo = new FlujoTicket();
             intSiguienteNumero = 1;
         }
 
@@ -40,116 +38,71 @@ namespace TicketsSoporte.logica
         }
 
         /// <summary>
-        /// Caso de uso "Asignar Ticket": asigna (o reasigna) automaticamente al tecnico
-        /// con menor carga que coincida con la categoria del ticket, o a un tecnico General.
+        /// Caso de uso "Asignar Ticket": asigna automaticamente al tecnico disponible
+        /// con menor carga que pueda atender la categoria del ticket.
         /// </summary>
         public Ticket asignarTicket(int intNumero)
         {
             Ticket objTicket = buscarTicket(intNumero);
-            Tecnico objTecnico = asignarTecnicoAutomatico(objTicket.strCategoria);
+            Tecnico objTecnico = lstTecnicos
+                .Where(t => t.puedeAtender(objTicket.strCategoria))
+                .OrderBy(t => t.intCargaActual)
+                .FirstOrDefault();
 
             if (objTecnico == null)
             {
                 throw new InvalidOperationException("No hay tecnicos disponibles para asignar el ticket.");
             }
 
-            objTicket.asignar(objTecnico);
+            objTicket.asignarTecnico(objTecnico);
             return objTicket;
         }
 
         /// <summary>
-        /// Asignacion manual a un tecnico especifico (por id), usada para reasignaciones puntuales.
+        /// Asignacion manual a un tecnico especifico (por codigo), usada para reasignaciones puntuales.
         /// </summary>
-        public Ticket asignarTicket(int intNumero, string strIdTecnico)
+        public Ticket asignarTicket(int intNumero, string strCodigoTecnico)
         {
             Ticket objTicket = buscarTicket(intNumero);
-            Tecnico objTecnico = lstTecnicos.FirstOrDefault(t => t.strId == strIdTecnico);
+            Tecnico objTecnico = lstTecnicos.FirstOrDefault(t => t.strCodigo == strCodigoTecnico);
 
             if (objTecnico == null)
             {
-                throw new KeyNotFoundException($"No existe el tecnico '{strIdTecnico}'.");
+                throw new KeyNotFoundException($"No existe el tecnico '{strCodigoTecnico}'.");
             }
 
-            objTicket.asignar(objTecnico);
+            objTicket.asignarTecnico(objTecnico);
             return objTicket;
         }
 
         /// <summary>
-        /// Caso de uso "Escalar Ticket": sube la prioridad y reasigna a un tecnico de mayor
-        /// nivel de experiencia dentro de la misma especialidad (si existe uno disponible).
+        /// Caso de uso "Escalar Ticket": sube la prioridad a Critica y deja constancia del motivo.
         /// </summary>
-        public Ticket escalarTicket(int intNumero, string strNuevaPrioridad)
+        public Ticket escalarTicket(int intNumero, string strMotivo)
         {
             Ticket objTicket = buscarTicket(intNumero);
-
-            if (!objFlujo.puedeCambiarEstado(objTicket.strEstado, "Escalado"))
-            {
-                throw new InvalidOperationException("El flujo no permite escalar el ticket desde el estado actual.");
-            }
-
-            Tecnico objTecnicoSenior = lstTecnicos
-                .Where(t => t.strEspecialidad.Equals(objTicket.strCategoria, StringComparison.OrdinalIgnoreCase))
-                .OrderByDescending(t => t.intNivelExperiencia)
-                .ThenBy(t => t.intTicketsAsignados)
-                .FirstOrDefault();
-
-            objTicket.escalar(strNuevaPrioridad, objTecnicoSenior);
+            objTicket.escalar(strMotivo);
             return objTicket;
         }
 
         /// <summary>
-        /// Caso de uso "Resolver Ticket": valida el flujo antes de registrar la solucion.
+        /// Caso de uso "Resolver Ticket": el propio Ticket valida que este Asignado.
         /// </summary>
         public Ticket resolverTicket(int intNumero, string strSolucion)
         {
             Ticket objTicket = buscarTicket(intNumero);
-
-            if (!objFlujo.puedeCambiarEstado(objTicket.strEstado, "Resuelto"))
-            {
-                throw new InvalidOperationException("El flujo no permite resolver el ticket desde el estado actual.");
-            }
-
             objTicket.resolver(strSolucion);
             return objTicket;
         }
 
         /// <summary>
-        /// Cierra el ticket, validando el flujo de estados.
+        /// Cierra el ticket; el propio Ticket valida que este Resuelto.
         /// </summary>
         public Ticket cerrarTicket(int intNumero)
         {
             Ticket objTicket = buscarTicket(intNumero);
-
-            if (!objFlujo.puedeCambiarEstado(objTicket.strEstado, "Cerrado"))
-            {
-                throw new InvalidOperationException("El flujo no permite cerrar el ticket desde el estado actual.");
-            }
-
             objTicket.cerrar();
             return objTicket;
-        }
-
-        public void mostrarFlujo()
-        {
-            objFlujo.mostrarFlujo();
-        }
-
-        private Tecnico asignarTecnicoAutomatico(string strCategoria)
-        {
-            Tecnico objTecnico = lstTecnicos
-                .Where(t => t.strEspecialidad.Equals(strCategoria, StringComparison.OrdinalIgnoreCase))
-                .OrderBy(t => t.intTicketsAsignados)
-                .FirstOrDefault();
-
-            if (objTecnico == null)
-            {
-                objTecnico = lstTecnicos
-                    .Where(t => t.strEspecialidad.Equals("General", StringComparison.OrdinalIgnoreCase))
-                    .OrderBy(t => t.intTicketsAsignados)
-                    .FirstOrDefault();
-            }
-
-            return objTecnico;
         }
 
         public Ticket buscarTicket(int intNumero)
@@ -187,7 +140,7 @@ namespace TicketsSoporte.logica
             Console.WriteLine($" Total de tickets: {lstTickets.Count}");
 
             Console.WriteLine("\n Tickets por estado:");
-            foreach (string strEstado in new[] { "Abierto", "Asignado", "Escalado", "Resuelto", "Cerrado" })
+            foreach (string strEstado in new[] { "Abierto", "Asignado", "Resuelto", "Cerrado" })
             {
                 int intCantidad = lstTickets.Count(t => t.strEstado == strEstado);
                 Console.WriteLine($"  {strEstado}: {intCantidad}");
@@ -206,7 +159,7 @@ namespace TicketsSoporte.logica
             Console.WriteLine("\n Carga por tecnico:");
             foreach (Tecnico objTecnico in lstTecnicos)
             {
-                Console.WriteLine($"  {objTecnico.strNombre} ({objTecnico.strEspecialidad}): {objTecnico.intTicketsAsignados} ticket(s)");
+                Console.WriteLine($"  {objTecnico.strNombre} ({objTecnico.strEspecialidad}): {objTecnico.intCargaActual}/{objTecnico.intCapacidadMaxima}");
             }
         }
     }

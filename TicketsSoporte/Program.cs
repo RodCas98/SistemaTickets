@@ -6,7 +6,7 @@ namespace TicketsSoporte
     {
         static void Main(string[] args)
         {
-            // 1. Herencia: Tecnico y Solicitante son tipos especializados de Persona.
+            // 1. Herencia: Tecnico y Solicitante son tipos especializados de Usuario.
             Tecnico objTecnicoSoftware = new Tecnico("T01", "Ana Lopez", "ana@empresa.com", "Software", 2);
             Tecnico objTecnicoHardware = new Tecnico("T02", "Carlos Mendez", "carlos@empresa.com", "Hardware", 2);
             Tecnico objTecnicoGeneral = new Tecnico("T03", "Maria Perez", "maria@empresa.com", "General", 3);
@@ -14,8 +14,8 @@ namespace TicketsSoporte
             Solicitante objSolicitanteContabilidad = new Solicitante("S01", "Luis Ramirez", "luis@empresa.com", "Contabilidad", "1201");
             Solicitante objSolicitanteVentas = new Solicitante("S02", "Karla Gomez", "karla@empresa.com", "Ventas", "1305");
 
-            // 2. Polimorfismo: una lista de Persona puede contener tecnicos y solicitantes.
-            List<Persona> lstPersonas = new List<Persona>()
+            // 2. Polimorfismo: una lista de Usuario puede contener tecnicos y solicitantes.
+            List<Usuario> lstUsuarios = new List<Usuario>()
             {
                 objTecnicoSoftware,
                 objTecnicoHardware,
@@ -42,18 +42,17 @@ namespace TicketsSoporte
                 Console.WriteLine("========================================================");
                 Console.ResetColor();
                 Console.WriteLine(" 1. Ver usuarios del sistema (polimorfismo)");
-                Console.WriteLine(" 2. Ver flujo de estados del ticket");
-                Console.WriteLine(" 3. Crear ticket (asigna automaticamente)");
-                Console.WriteLine(" 4. Ver tickets");
-                Console.WriteLine(" 5. Asignar / reasignar ticket a un tecnico");
-                Console.WriteLine(" 6. Registrar error en ticket");
-                Console.WriteLine(" 7. Resolver ticket");
-                Console.WriteLine(" 8. Escalar ticket");
-                Console.WriteLine(" 9. Cerrar ticket");
-                Console.WriteLine(" 10. Consultar bitacora de un ticket");
-                Console.WriteLine(" 11. Generar metricas");
-                Console.WriteLine(" 12. Salir");
-                Console.Write("\n Seleccione una opcion (1-12): ");
+                Console.WriteLine(" 2. Crear ticket (asigna automaticamente)");
+                Console.WriteLine(" 3. Ver tickets");
+                Console.WriteLine(" 4. Asignar / reasignar ticket a un tecnico");
+                Console.WriteLine(" 5. Registrar error en ticket");
+                Console.WriteLine(" 6. Resolver ticket");
+                Console.WriteLine(" 7. Escalar ticket");
+                Console.WriteLine(" 8. Cerrar ticket");
+                Console.WriteLine(" 9. Consultar bitacora de un ticket");
+                Console.WriteLine(" 10. Generar metricas");
+                Console.WriteLine(" 11. Salir");
+                Console.Write("\n Seleccione una opcion (1-11): ");
 
                 try
                 {
@@ -62,57 +61,53 @@ namespace TicketsSoporte
                     switch (strOpcion)
                     {
                         case "1":
-                            mostrarPersonasPolimorfismo(lstPersonas);
+                            mostrarUsuariosPolimorfismo(lstUsuarios);
                             break;
 
                         case "2":
-                            objGestor.mostrarFlujo();
-                            break;
-
-                        case "3":
                             crearTicket(objGestor);
                             break;
 
-                        case "4":
+                        case "3":
                             objGestor.mostrarTickets();
                             break;
 
-                        case "5":
+                        case "4":
                             asignarTicket(objGestor);
                             break;
 
-                        case "6":
+                        case "5":
                             registrarError(objGestor);
                             break;
 
-                        case "7":
+                        case "6":
                             resolverTicket(objGestor);
                             break;
 
-                        case "8":
+                        case "7":
                             escalarTicket(objGestor);
                             break;
 
-                        case "9":
+                        case "8":
                             cerrarTicket(objGestor);
                             break;
 
-                        case "10":
+                        case "9":
                             consultarBitacora(objGestor);
                             break;
 
-                        case "11":
+                        case "10":
                             objGestor.generarMetricas();
                             break;
 
-                        case "12":
+                        case "11":
                             blnContinuar = false;
                             Console.WriteLine("\nGracias por utilizar el sistema de soporte.");
                             break;
 
                         default:
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Opcion no valida. Ingrese un numero del 1 al 12.");
+                            Console.WriteLine("Opcion no valida. Ingrese un numero del 1 al 11.");
                             Console.ResetColor();
                             break;
                     }
@@ -129,15 +124,15 @@ namespace TicketsSoporte
         /// <summary>
         /// Demuestra polimorfismo: cada objeto ejecuta su propia version de mostrarInformacion().
         /// </summary>
-        static void mostrarPersonasPolimorfismo(List<Persona> lstPersonas)
+        static void mostrarUsuariosPolimorfismo(List<Usuario> lstUsuarios)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\n=== USUARIOS DEL SISTEMA ===");
             Console.ResetColor();
 
-            foreach (Persona objPersona in lstPersonas)
+            foreach (Usuario objUsuario in lstUsuarios)
             {
-                objPersona.mostrarInformacion();
+                objUsuario.mostrarInformacion();
                 Console.WriteLine();
             }
         }
@@ -203,7 +198,7 @@ namespace TicketsSoporte
                     throw new ArgumentOutOfRangeException("Tecnico", "Seleccion fuera de rango.");
                 }
 
-                objGestor.asignarTicket(objTicket.intNumero, objGestor.lstTecnicos[intIndice].strId);
+                objGestor.asignarTicket(objTicket.intNumero, objGestor.lstTecnicos[intIndice].strCodigo);
             }
 
             Console.WriteLine("Ticket asignado correctamente.");
@@ -214,10 +209,10 @@ namespace TicketsSoporte
         {
             Ticket objTicket = solicitarTicket(objGestor);
 
-            Console.Write("Nueva prioridad (Alta/Critica): ");
-            string strNuevaPrioridad = Console.ReadLine();
+            Console.Write("Motivo del escalamiento: ");
+            string strMotivo = Console.ReadLine();
 
-            objGestor.escalarTicket(objTicket.intNumero, strNuevaPrioridad);
+            objGestor.escalarTicket(objTicket.intNumero, strMotivo);
             Console.WriteLine("Ticket escalado correctamente.");
             objTicket.mostrarBitacora();
         }

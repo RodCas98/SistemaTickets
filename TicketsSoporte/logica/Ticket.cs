@@ -1,8 +1,5 @@
 namespace TicketsSoporte.logica
 {
-    /// <summary>
-    /// Representa un ticket de soporte y su ciclo de vida: Abierto -> Asignado -> (Escalado) -> Resuelto -> Cerrado.
-    /// </summary>
     public class Ticket
     {
         public int intNumero { get; set; }
@@ -11,13 +8,11 @@ namespace TicketsSoporte.logica
         public string strCategoria { get; set; }
         public string strPrioridad { get; set; }
         public string strEstado { get; set; }
-        public DateTime dtFechaCreacion { get; set; }
-        public string strSolucion { get; set; }
         public bool blnEscalado { get; set; }
-
         public Solicitante objSolicitante { get; set; }
         public Tecnico objTecnicoAsignado { get; set; }
-        public Bitacora objBitacora { get; set; }
+        public List<string> lstBitacora { get; set; }
+        public List<string> lstErrores { get; set; }
 
         public Ticket(int intNumero, string strTitulo, string strDescripcion, string strCategoria, string strPrioridad, Solicitante objSolicitante)
         {
@@ -26,76 +21,97 @@ namespace TicketsSoporte.logica
             this.strDescripcion = strDescripcion;
             this.strCategoria = strCategoria;
             this.strPrioridad = strPrioridad;
-            this.strEstado = "Abierto";
-            this.dtFechaCreacion = DateTime.Now;
             this.objSolicitante = objSolicitante;
-            this.objBitacora = new Bitacora();
-
-            objBitacora.registrarEvento($"Ticket creado por {objSolicitante.strNombre} - Categoria: {strCategoria} - Prioridad: {strPrioridad}");
+            this.strEstado = "Abierto";
+            this.blnEscalado = false;
+            this.lstBitacora = new List<string>();
+            this.lstErrores = new List<string>();
+            registrarBitacora("Ticket creado");
         }
 
-        public void asignar(Tecnico objTecnico)
+        public void registrarBitacora(string strEvento)
         {
-            if (objTecnicoAsignado != null)
+            lstBitacora.Add($"{DateTime.Now:dd/MM/yyyy HH:mm} - {strEvento}");
+        }
+
+        public void asignarTecnico(Tecnico objTecnico)
+        {
+            if (objTecnico == null)
             {
-                objTecnicoAsignado.intTicketsAsignados--;
-                objBitacora.registrarEvento($"Ticket reasignado de {objTecnicoAsignado.strNombre} a {objTecnico.strNombre} ({objTecnico.strEspecialidad})");
+                throw new InvalidOperationException("No se puede asignar un tecnico nulo.");
             }
-            else
+
+            if (!objTecnico.puedeAtender(strCategoria))
             {
-                objBitacora.registrarEvento($"Ticket asignado a {objTecnico.strNombre} ({objTecnico.strEspecialidad})");
+                throw new InvalidOperationException("El tecnico no esta disponible o no atiende esta categoria.");
             }
 
             objTecnicoAsignado = objTecnico;
-            objTecnico.intTicketsAsignados++;
+            objTecnico.aumentarCarga();
             strEstado = "Asignado";
+            registrarBitacora($"Asignado a {objTecnico.strNombre}");
         }
 
-        public void escalar(string strNuevaPrioridad, Tecnico objTecnicoSenior)
+        public void registrarError(string strTipo, string strDescripcion, string strImpacto)
         {
-            string strPrioridadAnterior = strPrioridad;
-            strPrioridad = strNuevaPrioridad;
-            blnEscalado = true;
-            strEstado = "Escalado";
-            objBitacora.registrarEvento($"Ticket escalado - Prioridad: {strPrioridadAnterior} -> {strNuevaPrioridad}");
+            string strError = $"{strTipo}: {strDescripcion} | Impacto: {strImpacto}";
+            lstErrores.Add(strError);
+            registrarBitacora("Error registrado - " + strError);
 
-            if (objTecnicoSenior != null && objTecnicoSenior != objTecnicoAsignado)
+            if (strImpacto.Equals("Alto", StringComparison.OrdinalIgnoreCase) ||
+                strImpacto.Equals("Critico", StringComparison.OrdinalIgnoreCase))
             {
-                asignar(objTecnicoSenior);
-                strEstado = "Escalado";
+                escalar("Error de alto impacto");
             }
         }
 
-        public void registrarError(string strTipo, string strDescripcionError, string strImpacto)
+        public void resolver(string strSolucion)
         {
-            objBitacora.registrarEvento($"Error registrado - Tipo: {strTipo} - Impacto: {strImpacto} - Detalle: {strDescripcionError}");
-        }
+            if (objTecnicoAsignado == null || strEstado != "Asignado")
+            {
+                throw new InvalidOperationException("Solo se puede resolver un ticket asignado.");
+            }
 
-        public void resolver(string strSolucionAplicada)
-        {
-            strSolucion = strSolucionAplicada;
             strEstado = "Resuelto";
-            objBitacora.registrarEvento($"Ticket resuelto - Solucion: {strSolucionAplicada}");
+            registrarBitacora("Solucion registrada: " + strSolucion);
         }
 
         public void cerrar()
         {
+            if (strEstado != "Resuelto")
+            {
+                throw new InvalidOperationException("Solo se puede cerrar un ticket resuelto.");
+            }
+
             strEstado = "Cerrado";
-            objBitacora.registrarEvento("Ticket cerrado");
+            objTecnicoAsignado?.liberarCarga();
+            registrarBitacora("Ticket cerrado");
+        }
+
+        public void escalar(string strMotivo)
+        {
+            blnEscalado = true;
+            if (!strPrioridad.Equals("Critica", StringComparison.OrdinalIgnoreCase))
+            {
+                strPrioridad = "Critica";
+            }
+            registrarBitacora("Ticket escalado: " + strMotivo);
         }
 
         public void mostrarResumen()
         {
-            Console.WriteLine($"  Ticket #{intNumero} - {strTitulo}");
-            Console.WriteLine($"  Estado: {strEstado}{(blnEscalado ? " (escalado)" : "")} | Categoria: {strCategoria} | Prioridad: {strPrioridad}");
-            Console.WriteLine($"  Solicitante: {objSolicitante.strNombre}");
-            Console.WriteLine($"  Tecnico asignado: {(objTecnicoAsignado != null ? objTecnicoAsignado.strNombre : "Sin asignar")}");
+            Console.WriteLine($"#{intNumero} | {strTitulo} | Estado: {strEstado} | Prioridad: {strPrioridad} | Categoria: {strCategoria}");
+            Console.WriteLine($" Solicitante: {objSolicitante.strNombre}");
+            Console.WriteLine($" Tecnico: {(objTecnicoAsignado != null ? objTecnicoAsignado.strNombre : "Sin asignar")} | Escalado: {blnEscalado}");
         }
 
         public void mostrarBitacora()
         {
-            mostrarResumen();
-            objBitacora.mostrarBitacora();
+            Console.WriteLine($"\nBitacora del ticket #{intNumero}");
+            foreach (string strEvento in lstBitacora)
+            {
+                Console.WriteLine("- " + strEvento);
+            }
         }
     }
 }
