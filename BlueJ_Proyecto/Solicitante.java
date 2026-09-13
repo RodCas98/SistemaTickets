@@ -1,24 +1,13 @@
-public class Solicitante extends Usuario
+public class Solicitante extends Persona
 {
     private String departamento;
     private String extension;
 
-    public Solicitante(String codigo, String nombre, String correo, String departamento, String extension)
+    public Solicitante(String id, String nombre, String correo, String departamento, String extension)
     {
-        super(codigo, nombre, correo);
+        super(id, nombre, correo);
         this.departamento = departamento;
         this.extension = extension;
-    }
-
-    public String obtenerRol()
-    {
-        return "Solicitante";
-    }
-
-    public void mostrarInformacion()
-    {
-        super.mostrarInformacion();
-        System.out.println(" Departamento: " + departamento + " | Extension: " + extension);
     }
 
     public String getDepartamento()
@@ -39,5 +28,11 @@ public class Solicitante extends Usuario
     public void setExtension(String extension)
     {
         this.extension = extension;
+    }
+
+    public void mostrarInformacion()
+    {
+        System.out.println("[Solicitante] " + getId() + " - " + getNombre() + " (" + getCorreo() + ")");
+        System.out.println("  Departamento: " + departamento + " | Extension: " + extension);
     }
 }
