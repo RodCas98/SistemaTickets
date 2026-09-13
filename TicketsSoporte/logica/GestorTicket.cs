@@ -1,9 +1,5 @@
 namespace TicketsSoporte.logica
 {
-    /// <summary>
-    /// Administra tecnicos, solicitantes y tickets; asigna automaticamente al tecnico
-    /// disponible con menor carga que pueda atender la categoria del ticket.
-    /// </summary>
     public class GestorTicket
     {
         public List<Tecnico> lstTecnicos { get; set; }
@@ -31,16 +27,11 @@ namespace TicketsSoporte.logica
             }
             catch (InvalidOperationException)
             {
-                // No hay tecnicos disponibles: el ticket queda Abierto para asignarse mas adelante.
             }
 
             return objTicket;
         }
 
-        /// <summary>
-        /// Caso de uso "Asignar Ticket": asigna automaticamente al tecnico disponible
-        /// con menor carga que pueda atender la categoria del ticket.
-        /// </summary>
         public Ticket asignarTicket(int intNumero)
         {
             Ticket objTicket = buscarTicket(intNumero);
@@ -58,9 +49,6 @@ namespace TicketsSoporte.logica
             return objTicket;
         }
 
-        /// <summary>
-        /// Asignacion manual a un tecnico especifico (por codigo), usada para reasignaciones puntuales.
-        /// </summary>
         public Ticket asignarTicket(int intNumero, string strCodigoTecnico)
         {
             Ticket objTicket = buscarTicket(intNumero);
@@ -75,9 +63,6 @@ namespace TicketsSoporte.logica
             return objTicket;
         }
 
-        /// <summary>
-        /// Caso de uso "Escalar Ticket": sube la prioridad a Critica y deja constancia del motivo.
-        /// </summary>
         public Ticket escalarTicket(int intNumero, string strMotivo)
         {
             Ticket objTicket = buscarTicket(intNumero);
@@ -85,9 +70,6 @@ namespace TicketsSoporte.logica
             return objTicket;
         }
 
-        /// <summary>
-        /// Caso de uso "Resolver Ticket": el propio Ticket valida que este Asignado.
-        /// </summary>
         public Ticket resolverTicket(int intNumero, string strSolucion)
         {
             Ticket objTicket = buscarTicket(intNumero);
@@ -95,9 +77,6 @@ namespace TicketsSoporte.logica
             return objTicket;
         }
 
-        /// <summary>
-        /// Cierra el ticket; el propio Ticket valida que este Resuelto.
-        /// </summary>
         public Ticket cerrarTicket(int intNumero)
         {
             Ticket objTicket = buscarTicket(intNumero);
@@ -131,9 +110,6 @@ namespace TicketsSoporte.logica
             }
         }
 
-        /// <summary>
-        /// Caso de uso "Generar Metricas": indicadores de control sobre los tickets del sistema.
-        /// </summary>
         public void generarMetricas()
         {
             Console.WriteLine("\n=== METRICAS DEL SISTEMA ===");
